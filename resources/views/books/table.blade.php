@@ -10,12 +10,13 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div class="sm:px-0 w-full">
-                        <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
                         <div class="px-0 md:px-10">
                             <div class="flex items-center justify-between">
-                                <x-primary-button>
-                                    {{ __('Tambah Buku') }}
-                                </x-primary-button>
+                                <a href="{{ route('books.create') }}">
+                                    <x-primary-button>
+                                        {{ __('Tambah Buku') }}
+                                    </x-primary-button>
+                                </a>
                                 <x-category-filter />
                             </div>
                         </div>
@@ -62,13 +63,14 @@
                                                     <div class="flex justify-center items-center">
                                                         <div
                                                             class="h-10 w-6 overflow-hidden object-cover object-center">
-                                                            <img src="{{ $book->cover }}" alt="{{ $book->title }}">
+                                                            <img src="{{ str_starts_with($book->cover, 'http') ? $book->cover : asset('storage' . $book->cover) }}"
+                                                                alt="{{ $book->title }}">
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td class="text-left pl-5">
                                                     <p class="text-indigo-600 underline font-medium">
-                                                        <a target="__blank" href="{{ $book->file }}">Link</a>
+                                                        <a target="__blank" href="{{ str_starts_with($book->file, 'http') ? $book->file : asset('storage' . $book->file) }}">Link</a>
                                                     </p>
                                                 </td>
                                                 <td class="text-left pl-5">
