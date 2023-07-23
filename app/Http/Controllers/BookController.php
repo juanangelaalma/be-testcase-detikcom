@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -28,5 +29,10 @@ class BookController extends Controller
         return view('books.table', [
             'books' => $books
         ]);
+    }
+
+    public function deleteBookById(Book $book) {
+        $book->delete();
+        return back();
     }
 }
