@@ -35,7 +35,8 @@ class BookController extends Controller
     public function createBook()
     {
         $categories = Category::all();
-        return view('books.create', compact('categories'));
+        $book = new Book();
+        return view('books.create', compact('categories', 'book'));
     }
 
     public function storeBook(Request $request)
