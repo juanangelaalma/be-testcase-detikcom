@@ -29,4 +29,9 @@ class CategoryController extends Controller
 
         return redirect(route('categories.table'))->with('success', 'Berhasil menambah kategori');
     }
+
+    public function deleteCategoryById(Category $category) {
+        $category->delete();
+        return back();
+    }
 }

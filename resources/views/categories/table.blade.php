@@ -87,7 +87,7 @@
 
           Swal.fire({
               title: 'Apakah anda yakin?',
-              text: "Data akan terhapus secara permanen!",
+              text: "Data buku yang berhubungan dengan kategori ini akan terhapus juga!",
               icon: 'warning',
               showCancelButton: true,
               confirmButtonColor: '#d33',
