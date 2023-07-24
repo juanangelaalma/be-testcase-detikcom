@@ -26,8 +26,8 @@ Route::get('/dashboard', function () {
 
 
 Route::middleware('auth')->group(function () {
-
     Route::get('/books', [BookController::class, 'getBooks'])->name('books.table');
+    Route::post('/books/export', [BookController::class, 'export'])->name('books.export');
     Route::middleware('can:create book')->group(function () {
         Route::get('/books/create', [BookController::class, 'createBook'])->name('books.create');
         Route::post('/books/store', [BookController::class, 'storeBook'])->name('books.store');

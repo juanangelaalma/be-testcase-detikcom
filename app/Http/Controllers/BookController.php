@@ -7,15 +7,15 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class BookController extends Controller
 {
-    public function getBooks(Request $request)
+    private function queryGetBooks(Request $request)
     {
+        $query = Book::with('category');
         $user = Auth::user();
         $category = $request->query('category');
-
-        $query = Book::with('category');
 
         if (!$user->hasRole('admin')) {
             $query->where('user_id', $user->id);
@@ -26,7 +26,12 @@ class BookController extends Controller
         }
 
         $books = $query->latest()->get();
+        return $books;
+    }
 
+    public function getBooks(Request $request)
+    {
+        $books = $this->queryGetBooks($request);
         return view('books.table', [
             'books' => $books
         ]);
@@ -139,5 +144,17 @@ class BookController extends Controller
         Storage::disk('public')->delete($book->file);
         $book->delete();
         return back()->with('success', 'Berhasil menghapus buku');
+    }
+
+    public function export(Request $request)
+    {
+        $books = $this->queryGetBooks($request);
+        // dd($books);
+        $pdf = PDF::loadView('books.export', compact('books'));
+        $pdf->setOptions([
+            'isRemoteEnabled' => true,
+        ]);
+        $pdf->render();
+        return $pdf->download('Data Buku.pdf');
     }
 }

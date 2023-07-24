@@ -13,11 +13,19 @@
                         <div class="px-0 md:px-10">
                             <x-success-alert />
                             <div class="flex mt-4 items-center justify-between">
-                                <a href="{{ route('books.create') }}">
-                                    <x-primary-button>
-                                        {{ __('Tambah Buku') }}
-                                    </x-primary-button>
-                                </a>
+                                <div class="flex space-x-0 md:space-x-2 flex-col md:flex-row space-y-2 md:space-y-0">
+                                    <a href="{{ route('books.create') }}">
+                                        <x-primary-button>
+                                            {{ __('Tambah Buku') }}
+                                        </x-primary-button>
+                                    </a>
+                                    <form action="{{ route('books.export') }}" method="POST">
+                                        @csrf
+                                        <x-primary-button type="submit" class="bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-600 focus:ring-emerald-500 focus:bg-emerald-600">
+                                            {{ __('Export') }}
+                                        </x-primary-button>
+                                    </form>
+                                </div>
                                 <x-category-filter />
                             </div>
                         </div>
