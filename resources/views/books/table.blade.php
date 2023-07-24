@@ -95,9 +95,9 @@
                                                 </td>
                                                 <td class="text-left pl-5">
                                                     <div class="flex items-center space-x-2">
-                                                        <x-secondary-button
-                                                            class="bg-blue-600 hover:bg-blue-700 text-white">Edit
-                                                        </x-secondary-button>
+                                                        <a href="{{ route('books.edit', $book->id) }}">
+                                                            <x-primary-button type="button">Edit</x-primary-button>
+                                                        </a>
                                                         <form method="POST"
                                                             action="{{ route('books.delete', $book->id) }}">
                                                             @csrf

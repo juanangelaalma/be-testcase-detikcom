@@ -53,10 +53,11 @@ class BookController extends Controller
         $cover = $request->file('cover');
         $file = $request->file('file');
 
-        $name = time() . "." . $cover->extension();
+        $coverName = time() . "." . $cover->extension();
+        $fileName = time() . "." . $file->extension();
 
-        $coverPath = "/books/covers/$name";
-        $filePath = "/books/files/$name";
+        $coverPath = "/books/covers/$coverName";
+        $filePath = "/books/files/$fileName";
 
         Storage::disk('public')->put($coverPath, file_get_contents($cover));
         Storage::disk('public')->put($filePath, file_get_contents($file));
@@ -72,6 +73,61 @@ class BookController extends Controller
         ]);
 
         return redirect(route('books.table'))->with('success', 'Berhasil menambahkan buku');
+    }
+
+    public function editBookById(Book $book)
+    {
+        $categories = Category::all();
+        return view('books.edit', compact('book', 'categories'));
+    }
+
+    public function updateBookById(Request $request, Book $book)
+    {
+        $request->validate([
+            'title'     => 'required|max:100',
+            'category'  => 'required',
+            'description'   => 'required',
+            'quantity'  => 'required|int',
+        ]);
+
+        if ($request->file('cover')) {
+            $request->validate([
+                'cover'     => 'required|mimes:png,jpg,jpeg',
+            ]);
+
+            Storage::disk('public')->delete($book->cover);
+
+            $cover = $request->file('cover');
+            $newCoverName = time() . "." . $cover->extension();
+            $newCoverPath = "/books/covers/$newCoverName";
+            Storage::disk('public')->put($newCoverPath, file_get_contents($cover));
+
+            $book->cover = $newCoverPath;
+        }
+
+        if ($request->file('file')) {
+            $request->validate([
+                'file'     => 'required|mimes:pdf',
+            ]);
+
+            Storage::disk('public')->delete($book->file);
+
+            $file = $request->file('file');
+            $newFileName = time() . "." . $file->extension();
+            $newFilePath = "/books/files/$newFileName";
+            Storage::disk('public')->put($newFilePath, file_get_contents($file));
+
+            $book->file = $newFilePath;
+        }
+
+        $book->title = $request->title;
+        $book->category_id = $request->category;
+        $book->description = $request->description;
+        $book->quantity = $request->quantity;
+
+        $book->save();
+
+        return redirect(route('books.table'))->with('success', 'Berhasil update data buku');
     }
 
     public function deleteBookById(Book $book)
