@@ -7,8 +7,8 @@
       </div>
       <div class="mb-2 md:w-1/2 md:px-2">
           <x-input-label for="category" :value="__('Kategori')" />
-          <x-select-input id="category" name="category" class="mt-1 w-full capitalize">
-              <x-option-select selected>Pilih...</x-option-select>
+          <x-select-input id="category" value="{{ $book->category_id }}" name="category" class="mt-1 w-full capitalize">
+              <x-option-select disabled selected>Pilih...</x-option-select>
               @foreach ($categories as $category)
                   <option class="capitalize" value="{{ $category->id }}"
                       {{ $category->id == (old('category') ? old('category') : $book->category_id) ? 'selected' : '' }} class="capitalize">

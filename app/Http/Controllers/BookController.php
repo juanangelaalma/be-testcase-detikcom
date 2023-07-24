@@ -25,7 +25,7 @@ class BookController extends Controller
             $query->where('category_id', $category);
         }
 
-        $books = $query->get();
+        $books = $query->latest()->get();
 
         return view('books.table', [
             'books' => $books
@@ -34,7 +34,7 @@ class BookController extends Controller
 
     public function createBook()
     {
-        $categories = Category::all();
+        $categories = Category::latest()->get();
         $book = new Book();
         $submitLabel = 'Tambah';
         return view('books.create', compact('categories', 'book', 'submitLabel'));
@@ -46,10 +46,11 @@ class BookController extends Controller
             'title'     => 'required|max:100',
             'category'  => 'required',
             'description'   => 'required',
-            'quantity'  => 'required|int',
+            'quantity'  => 'required|int|min:0',
             'cover'     => 'required|mimes:png,jpg,jpeg',
             'file'     => 'required|mimes:pdf',
         ]);
+
 
         $cover = $request->file('cover');
         $file = $request->file('file');
@@ -78,7 +79,7 @@ class BookController extends Controller
 
     public function editBookById(Book $book)
     {
-        $categories = Category::all();
+        $categories = Category::latest()->get();
         $submitLabel = 'Edit';
         return view('books.edit', compact('book', 'categories', 'submitLabel'));
     }

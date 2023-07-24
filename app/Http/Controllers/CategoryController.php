@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function getCategories()
     {
-        $categories = Category::all();
+        $categories = Category::latest()->get();
         return view('categories.table', compact('categories'));
     }
 
