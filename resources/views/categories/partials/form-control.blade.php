@@ -6,7 +6,8 @@
       <x-input-error :messages="$errors->get('name')" class="mt-2" />
   </div>
   <div class="w-full md:px-2 md:w-1/2 flex items-center">
-      <x-primary-button type="submit" class="mt-6 w-full md:w-1/2 text-center flex justify-center py-3 flex-shrink-0">Tambah
+      <x-primary-button type="submit" class="mt-4 w-full md:w-1/2 text-center flex justify-center py-3 flex-shrink-0">
+          {{ $submitLabel }}
       </x-primary-button>
   </div>
 </div>

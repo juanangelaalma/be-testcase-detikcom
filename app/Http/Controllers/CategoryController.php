@@ -15,7 +15,8 @@ class CategoryController extends Controller
 
     public function createCategory() {
         $category = new Category();
-        return view('categories.create', compact('category'));
+        $submitLabel = 'Tambah';
+        return view('categories.create', compact('category', 'submitLabel'));
     }
 
     public function storeCategory(Request $request) {
@@ -28,6 +29,23 @@ class CategoryController extends Controller
         ]);
 
         return redirect(route('categories.table'))->with('success', 'Berhasil menambah kategori');
+    }
+
+    public function editCategoryById(Category $category) {
+        $submitLabel = "Edit";
+        return view('categories.edit', compact('category', 'submitLabel'));
+    }
+
+    public function updateCategoryById(Request $request, Category $category) {
+        $request->validate([
+            'name'      => 'required|max:50'
+        ]);
+
+        $category->name = $request->name;
+
+        $category->save();
+
+        return redirect(route('categories.table'))->with('success', 'Berhasil update kategori');
     }
 
     public function deleteCategoryById(Category $category) {

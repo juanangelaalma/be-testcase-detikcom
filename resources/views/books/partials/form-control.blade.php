@@ -43,7 +43,7 @@
           <x-input-error :messages="$errors->get('file')" class="mt-2" />
       </div>
       <div class="w-full md:px-2 md:w-1/2">
-          <x-primary-button type="submit" class="mt-4 w-full text-center flex justify-center py-3">Tambah
+          <x-primary-button type="submit" class="mt-4 w-full text-center flex justify-center py-3">{{ $submitLabel }}
           </x-primary-button>
       </div>
   </div>

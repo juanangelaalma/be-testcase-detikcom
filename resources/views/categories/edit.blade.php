@@ -11,6 +11,7 @@
               <div class="p-6 text-gray-900">
                   <form action="{{ route('categories.update', $category->id) }}" method="POST">
                       @csrf
+                      @method("PUT")
                       @include('categories.partials.form-control')
                   </form>
               </div>

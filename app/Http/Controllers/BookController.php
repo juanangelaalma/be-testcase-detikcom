@@ -36,7 +36,8 @@ class BookController extends Controller
     {
         $categories = Category::all();
         $book = new Book();
-        return view('books.create', compact('categories', 'book'));
+        $submitLabel = 'Tambah';
+        return view('books.create', compact('categories', 'book', 'submitLabel'));
     }
 
     public function storeBook(Request $request)
@@ -78,7 +79,8 @@ class BookController extends Controller
     public function editBookById(Book $book)
     {
         $categories = Category::all();
-        return view('books.edit', compact('book', 'categories'));
+        $submitLabel = 'Edit';
+        return view('books.edit', compact('book', 'categories', 'submitLabel'));
     }
 
     public function updateBookById(Request $request, Book $book)
