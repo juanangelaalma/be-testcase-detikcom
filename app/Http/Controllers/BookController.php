@@ -137,6 +137,6 @@ class BookController extends Controller
         Storage::disk('public')->delete($book->cover);
         Storage::disk('public')->delete($book->file);
         $book->delete();
-        return back();
+        return back()->with('success', 'Berhasil menghapus buku');
     }
 }

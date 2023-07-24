@@ -50,6 +50,6 @@ class CategoryController extends Controller
 
     public function deleteCategoryById(Category $category) {
         $category->delete();
-        return back();
+        return back()->with('success', 'Berhasil menghapus kategori');
     }
 }
