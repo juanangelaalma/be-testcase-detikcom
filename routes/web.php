@@ -31,11 +31,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/books', [BookController::class, 'getBooks'])->name('books.table');
-    Route::get('/books/create', [BookController::class, 'createBook'])->name('books.create');
-    Route::post('/books/store', [BookController::class, 'storeBook'])->name('books.store');
-    Route::get('/books/{book:id}/edit', [BookController::class, 'editBookById'])->name('books.edit');
-    Route::put('/books/{book:id}/update', [BookController::class, 'updateBookById'])->name('books.update');
-    Route::delete('/books/{book:id}/delete', [BookController::class, 'deleteBookById'])->name('books.delete');
+    Route::middleware('can:create book')->group(function () {
+        Route::get('/books/create', [BookController::class, 'createBook'])->name('books.create');
+        Route::post('/books/store', [BookController::class, 'storeBook'])->name('books.store');
+    });
+    Route::middleware('user_book')->group(function () {
+        Route::middleware('can:update book')->group(function () {
+            Route::get('/books/{book:id}/edit', [BookController::class, 'editBookById'])->name('books.edit');
+            Route::put('/books/{book:id}/update', [BookController::class, 'updateBookById'])->name('books.update');
+        });
+        Route::middleware('can:delete book')->group(function () {
+            Route::delete('/books/{book:id}/delete', [BookController::class, 'deleteBookById'])->name('books.delete');
+        });
+    });
 
     Route::get('/categories', [CategoryController::class, 'getCategories'])->name('categories.table');
     Route::get('/categories/create', [CategoryController::class, 'createCategory'])->name('categories.create');
