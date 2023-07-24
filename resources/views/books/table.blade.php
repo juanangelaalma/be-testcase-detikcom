@@ -11,7 +11,8 @@
                 <div class="p-6 text-gray-900">
                     <div class="sm:px-0 w-full">
                         <div class="px-0 md:px-10">
-                            <div class="flex items-center justify-between">
+                            <x-success-alert />
+                            <div class="flex mt-4 items-center justify-between">
                                 <a href="{{ route('books.create') }}">
                                     <x-primary-button>
                                         {{ __('Tambah Buku') }}
