@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{book:id}/edit', [BookController::class, 'editBookById'])->name('books.edit');
     Route::put('/books/{book:id}/update', [BookController::class, 'updateBookById'])->name('books.update');
     Route::delete('/books/{book:id}/delete', [BookController::class, 'deleteBookById'])->name('books.delete');
+
+    Route::get('/categories', [CategoryController::class, 'getCategories'])->name('categories.table');
+    Route::get('/categories/create', [CategoryController::class, 'createCategory'])->name('categories.create');
+    Route::post('/categories/store', [CategoryController::class, 'storeCategory'])->name('categories.store');
+    Route::get('/categories/{category:id}/edit', [CategoryController::class, 'editCategoryById'])->name('categories.edit');
+    Route::put('/categories/{category:id}/update', [CategoryController::class, 'updateCategoryById'])->name('categories.update');
+    Route::delete('/categories/{category:id}/delete', [CategoryController::class, 'deleteCategoryById'])->name('categories.delete');
 });
 
 require __DIR__ . '/auth.php';
